@@ -508,6 +508,28 @@
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Group that shows only on devices that have a video-camera</string>
+			<key>UIRequiredDeviceCapabilities</key>
+			<array>
+				<string>video-camera</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Another entry</string>
+			<key>Key</key>
+			<string>title_non_existing_lookup_entry3</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+			<key>UIRequiredDeviceCapabilities</key>
+			<array>
+				<string>video-camera</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

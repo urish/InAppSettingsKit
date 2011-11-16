@@ -31,6 +31,8 @@
 - (IASKAppSettingsViewController*)appSettingsViewController {
 	if (!appSettingsViewController) {
 		appSettingsViewController = [[IASKAppSettingsViewController alloc] initWithNibName:@"IASKAppSettingsView" bundle:nil];
+    appSettingsViewController.settingsReader = [[IASKSettingsReader alloc] initWithFile:appSettingsViewController.file 
+                                                                         filterDelegate:self]
 		appSettingsViewController.delegate = self;
 	}
 	return appSettingsViewController;
@@ -155,5 +157,31 @@
     [super dealloc];
 }
 
+#pragma mark - IASKSettingsReaderFilterDelegate
++ (BOOL) deviceFulfillsRequirements:(NSArray*) requirements {
+  for(NSString* requirement in requirements) {
+    if([requirement isEqualToString:@"video-camera"] && ! ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+      return NO
+    }
+  }
+  return YES;
+}
 
++ (BOOL) shouldAddEntryWithDictionary:(NSDictionary*) dict {
+  static NSString* const requirementsKey = @"UIRequiredDeviceCapabilities";
+  NSArray* requirements = [dict objectForKey:requirementsKey];
+  if( nil != requirements ) {
+    return [self deviceFulfillsRequirements:requirements];
+  } else {
+    return YES;
+  }
+}
+
+- (BOOL)settingsReader:(IASKSettingsReader *)reader shouldAddSpecifier:(IASKSpecifier *)specifier {
+  return [[self class] shouldAddEntryWithDictionary:[specifier specifierDict]];
+}
+
+- (BOOL) settingsReader:(IASKSettingsReader *)reader shouldAddGroupTitleWithDictionary:(NSDictionary *)groupDictionary {
+  return [[self class] shouldAddEntryWithDictionary:groupDictionary];
+}
 @end

@@ -16,8 +16,8 @@
 //
 
 #import "IASKAppSettingsViewController.h"
-
-@interface MainViewController : UIViewController <IASKSettingsDelegate, UITextViewDelegate> { 
+#import "IASKSettingsReader.h"
+@interface MainViewController : UIViewController <IASKSettingsDelegate, UITextViewDelegate, IASKSettingsReaderFilterDelegate> { 
     IASKAppSettingsViewController *appSettingsViewController;
 }
 
