@@ -643,6 +643,8 @@ CGRect IASKCGRectSwap(CGRect rect);
         }
         self.currentIndexPath = indexPath;
 		targetViewController.file = specifier.file;
+    targetViewController.settingsReader = [[IASKSettingsReader alloc] initWithFile:specifier.file
+                                                                    filterDelegate:self.settingsReader.filterDelegate];
 		targetViewController.title = specifier.title;
         targetViewController.showCreditsFooter = NO;
         [[self navigationController] pushViewController:targetViewController animated:YES];
