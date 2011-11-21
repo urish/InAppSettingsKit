@@ -642,6 +642,8 @@ CGRect IASKCGRectSwap(CGRect rect);
             targetViewController = [[self.viewList objectAtIndex:kIASKSpecifierChildViewControllerIndex] objectForKey:@"viewController"];
         }
 		targetViewController.file = specifier.file;
+    targetViewController.settingsReader = [[IASKSettingsReader alloc] initWithFile:specifier.file
+                                                                    filterDelegate:self.settingsReader.filterDelegate];
 		targetViewController.title = specifier.title;
         targetViewController.showCreditsFooter = NO;
         [[self navigationController] pushViewController:targetViewController animated:YES];
