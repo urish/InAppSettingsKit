@@ -18,6 +18,7 @@
 #import <MessageUI/MessageUI.h>
 
 #import "IASKSettingsStore.h"
+#import "IASKViewController.h"
 
 @class IASKSettingsReader;
 @class IASKAppSettingsViewController;
@@ -25,22 +26,31 @@
 
 @protocol IASKSettingsDelegate
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender;
-@optional
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderForKey:(NSString*)key;
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderForKey:(NSString*)key;
 
+@optional
+#pragma mark - UITableView header customization
+- (CGFloat) settingsViewController:(id<IASKViewController>) settingsViewContoller
+                         tableView:(UITableView *)tableView 
+         heightForHeaderForSection:(NSInteger)section;
+- (UIView *) settingsViewController:(id<IASKViewController>) settingsViewContoller
+                          tableView:(UITableView *)tableView 
+            viewForHeaderForSection:(NSInteger)section;
+
+#pragma mark - UITableView cell customization
 - (CGFloat)tableView:(UITableView*)tableView heightForSpecifier:(IASKSpecifier*)specifier;
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForSpecifier:(IASKSpecifier*)specifier;
 
+#pragma mark - mail composing customization
 - (NSString*)mailComposeBody;
 - (UIViewController<MFMailComposeViewControllerDelegate>*)viewControllerForMailComposeView;
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error;
 
+#pragma mark - respond to button taps
 - (void)settingsViewController:(IASKAppSettingsViewController*)sender buttonTappedForKey:(NSString*)key;
 @end
 
 
-@interface IASKAppSettingsViewController : UITableViewController <UITextFieldDelegate, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate> {
+@interface IASKAppSettingsViewController : UITableViewController <IASKViewController, UITextFieldDelegate, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate> {
 	id<IASKSettingsDelegate>  _delegate;
     
     NSMutableArray          *_viewList;
@@ -56,8 +66,6 @@
 }
 
 @property (nonatomic, assign) IBOutlet id delegate;
-@property (nonatomic, retain) IASKSettingsReader *settingsReader;
-@property (nonatomic, retain) id<IASKSettingsStore> settingsStore;
 @property (nonatomic, copy) NSString *file;
 @property (nonatomic, assign) BOOL showCreditsFooter;
 @property (nonatomic, assign) BOOL showDoneButton;
