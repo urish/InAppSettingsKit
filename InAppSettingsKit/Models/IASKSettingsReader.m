@@ -27,7 +27,8 @@
 
 @implementation IASKSettingsReader
 
-@synthesize path=_path,
+@synthesize filterDelegate = _filterDelegate,
+path=_path,
 localizationTable=_localizationTable,
 bundlePath=_bundlePath,
 settingsBundle=_settingsBundle, 
@@ -38,9 +39,12 @@ dataSource=_dataSource;
 }
 
 - (id)initWithFile:(NSString*)file {
-	if ((self=[super init])) {
+  return [self initWithFile:file filterDelegate:nil];
+}
 
-
+- (id)initWithFile:(NSString*)file filterDelegate:(id<IASKSettingsReaderFilterDelegate>) filterDelegate {
+	if ((self = [super init])) {
+    self.filterDelegate = filterDelegate;
 		self.path = [self locateSettingsFile: file];
 		[self setSettingsBundle:[NSDictionary dictionaryWithContentsOfFile:self.path]];
 		self.bundlePath = [self.path stringByDeletingLastPathComponent];
@@ -85,7 +89,11 @@ dataSource=_dataSource;
 	NSMutableArray *dataSource		= [[[NSMutableArray alloc] init] autorelease];
 	
 	for (NSDictionary *specifier in preferenceSpecifiers) {
-		if ([(NSString*)[specifier objectForKey:kIASKType] isEqualToString:kIASKPSGroupSpecifier]) {
+		if ([[specifier objectForKey:kIASKType] isEqualToString:kIASKPSGroupSpecifier]) {
+      //optionally ask the delegate if this should be included
+      if(nil != self.filterDelegate && ! [self.filterDelegate settingsReader:self shouldAddGroupTitleWithDictionary:specifier]) {
+        continue;
+      }
 			NSMutableArray *newArray = [[NSMutableArray alloc] init];
 			
 			[newArray addObject:specifier];
@@ -100,10 +108,12 @@ dataSource=_dataSource;
 				[newArray release];
 				sectionCount++;
 			}
-
-			IASKSpecifier *newSpecifier = [[IASKSpecifier alloc] initWithSpecifier:specifier];
-			[(NSMutableArray*)[dataSource objectAtIndex:sectionCount] addObject:newSpecifier];
-			[newSpecifier release];
+      
+      IASKSpecifier *newSpecifier = [[[IASKSpecifier alloc] initWithSpecifier:specifier] autorelease];
+      if(nil != self.filterDelegate && ! [self.filterDelegate settingsReader:self shouldAddSpecifier:newSpecifier]) {
+        continue;
+      }
+      [[dataSource objectAtIndex:sectionCount] addObject:newSpecifier];
 		}
 	}
 	[self setDataSource:dataSource];

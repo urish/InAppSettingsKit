@@ -514,7 +514,11 @@
 			<key>Title</key>
 			<string>Group with a customized header appearance</string>
 			<key>Key</key>
-			<string>IASKCustomHeaderStyle</string>
+			<string>Group that shows only on devices that have a video-camera</string>
+			<key>UIRequiredDeviceCapabilities</key>
+			<array>
+				<string>video-camera</string>
+			</array>
 		</dict>
 		<dict>
 			<key>Title</key>
@@ -523,6 +527,10 @@
 			<string>title_non_existing_lookup_entry3</string>
 			<key>Type</key>
 			<string>PSTitleValueSpecifier</string>
+			<key>UIRequiredDeviceCapabilities</key>
+			<array>
+				<string>video-camera</string>
+			</array>
 		</dict>
 	</array>
 </dict>
