@@ -147,6 +147,22 @@ CGRect IASKCGRectSwap(CGRect rect);
 	return _viewList;
 }
 
+- (void) viewDidLoad {
+  [super viewDidLoad];
+
+  if (_showDoneButton) {
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                                                                                target:self 
+                                                                                action:@selector(dismiss:)];
+    self.navigationItem.rightBarButtonItem = buttonItem;
+    [buttonItem release];
+  }
+
+  if (!self.title) {
+    self.title = NSLocalizedString(@"Settings", @"");
+  }
+}
+
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
@@ -157,18 +173,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 - (void)viewWillAppear:(BOOL)animated {
 	[self.tableView reloadData];
 
-	self.navigationItem.rightBarButtonItem = nil;
     self.navigationController.delegate = self;
-    if (_showDoneButton) {
-        UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-                                                                                    target:self 
-                                                                                    action:@selector(dismiss:)];
-        self.navigationItem.rightBarButtonItem = buttonItem;
-        [buttonItem release];
-    } 
-    if (!self.title) {
-        self.title = NSLocalizedString(@"Settings", @"");
-    }
 	
 	if (self.currentIndexPath) {
 		if (animated) {
