@@ -32,7 +32,7 @@
 	if (!appSettingsViewController) {
 		appSettingsViewController = [[IASKAppSettingsViewController alloc] initWithNibName:@"IASKAppSettingsView" bundle:nil];
     appSettingsViewController.settingsReader = [[IASKSettingsReader alloc] initWithFile:appSettingsViewController.file 
-                                                                         filterDelegate:self]
+                                                                         filterDelegate:self];
 		appSettingsViewController.delegate = self;
 	}
 	return appSettingsViewController;
@@ -160,8 +160,8 @@
 #pragma mark - IASKSettingsReaderFilterDelegate
 + (BOOL) deviceFulfillsRequirements:(NSArray*) requirements {
   for(NSString* requirement in requirements) {
-    if([requirement isEqualToString:@"video-camera"] && ! ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-      return NO
+    if([requirement isEqualToString:@"video-camera"] && ! ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])) {
+      return NO;
     }
   }
   return YES;
