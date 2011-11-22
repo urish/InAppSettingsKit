@@ -147,6 +147,22 @@ CGRect IASKCGRectSwap(CGRect rect);
 	return _viewList;
 }
 
+- (void) viewDidLoad {
+  [super viewDidLoad];
+
+  if (_showDoneButton) {
+    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                                                                                target:self 
+                                                                                action:@selector(dismiss:)];
+    self.navigationItem.rightBarButtonItem = buttonItem;
+    [buttonItem release];
+  }
+
+  if (!self.title) {
+    self.title = NSLocalizedString(@"Settings", @"");
+  }
+}
+
 - (void)viewDidUnload {
   [super viewDidUnload];
 
@@ -167,19 +183,8 @@ CGRect IASKCGRectSwap(CGRect rect);
     [self.tableView selectRowAtIndexPath:selectedIndexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
   }
 
-	self.navigationItem.rightBarButtonItem = nil;
     self.navigationController.delegate = self;
-    if (_showDoneButton) {
-        UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-                                                                                    target:self 
-                                                                                    action:@selector(dismiss:)];
-        self.navigationItem.rightBarButtonItem = buttonItem;
-        [buttonItem release];
-    } 
-    if (!self.title) {
-        self.title = NSLocalizedString(@"Settings", @"");
-    }
-		
+
 	[super viewWillAppear:animated];
 }
 
