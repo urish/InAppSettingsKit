@@ -71,6 +71,16 @@ CGRect IASKCGRectSwap(CGRect rect);
 	return _settingsReader;
 }
 
+- (void)setSettingsReader:(IASKSettingsReader *)settingsReader {
+  if(_settingsReader != settingsReader) {
+    [_settingsReader release];
+    _settingsReader = [settingsReader retain];
+    if(self.isViewLoaded) {
+      [self.tableView reloadData];
+    }
+  }
+}
+
 - (id<IASKSettingsStore>)settingsStore {
 	if (!_settingsStore) {
 		_settingsStore = [[IASKSettingsStoreUserDefaults alloc] init];
@@ -641,10 +651,13 @@ CGRect IASKCGRectSwap(CGRect rect);
             // load the view controll back in to push it
             targetViewController = [[self.viewList objectAtIndex:kIASKSpecifierChildViewControllerIndex] objectForKey:@"viewController"];
         }
-        self.currentIndexPath = indexPath;
-		targetViewController.file = specifier.file;
-    targetViewController.settingsReader = [[IASKSettingsReader alloc] initWithFile:specifier.file
-                                                                    filterDelegate:self.settingsReader.filterDelegate];
+
+      targetViewController.file = specifier.file;
+      IASKSettingsReader* reader = [[IASKSettingsReader alloc] initWithFile:specifier.file
+                                                             filterDelegate:self.settingsReader.filterDelegate];
+      [targetViewController setSettingsReader:reader];
+      [reader release];
+
 		targetViewController.title = specifier.title;
         targetViewController.showCreditsFooter = NO;
         [[self navigationController] pushViewController:targetViewController animated:YES];
