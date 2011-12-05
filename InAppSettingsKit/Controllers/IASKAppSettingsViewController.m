@@ -364,6 +364,33 @@ CGRect IASKCGRectSwap(CGRect rect);
 	return 0;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+  if ([self.delegate respondsToSelector:@selector(settingsViewController:tableView:viewForFooterForSection:)]) {
+		return [self.delegate settingsViewController:self tableView:tableView viewForFooterForSection:section];
+	} else {
+		return nil;
+	}
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+  if ([self tableView:tableView viewForFooterInSection:section] && [self.delegate respondsToSelector:@selector(settingsViewController:tableView:heightForFooterForSection:)]) {
+		CGFloat result;
+		if ((result = [self.delegate settingsViewController:self tableView:tableView heightForFooterForSection:section])) {
+			return result;
+		}
+		
+	}
+	NSString *title;
+	if ((title = [self tableView:tableView titleForFooterInSection:section])) {
+		CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:kIASKFooterLabelFontSize] 
+                    constrainedToSize:CGSizeMake(tableView.frame.size.width - 2*kIASKHorizontalPaddingFooterLabel, CGFLOAT_MAX)
+                        lineBreakMode:UILineBreakModeWordWrap];
+    NSLog(@"%@", NSStringFromCGSize(size));
+		return size.height + 2. * kIASKVerticalPaddingFooterLabel;
+	}
+	return 0;
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
 	NSString *footerText = [self.settingsReader footerTextForSection:section];
