@@ -93,8 +93,11 @@
 #define kIASKPaddingRight                     10
 #define kIASKHorizontalPaddingGroupTitles     19
 #define kIASKVerticalPaddingGroupTitles       15
+#define kIASKHorizontalPaddingFooterLabel     19
+#define kIASKVerticalPaddingFooterLabel       6
 
 #define kIASKLabelFontSize                    17
+#define kIASKFooterLabelFontSize              15
 #define kIASKgrayBlueColor                    [UIColor colorWithRed:0.318 green:0.4 blue:0.569 alpha:1.0]
 
 #ifndef kCFCoreFoundationVersionNumber_iPhoneOS_4_0
