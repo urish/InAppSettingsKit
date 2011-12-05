@@ -370,7 +370,6 @@ CGRect IASKCGRectSwap(CGRect rect);
 		CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:kIASKFooterLabelFontSize] 
                     constrainedToSize:CGSizeMake(tableView.frame.size.width - 2*kIASKHorizontalPaddingFooterLabel, CGFLOAT_MAX)
                         lineBreakMode:UILineBreakModeWordWrap];
-    NSLog(@"%@", NSStringFromCGSize(size));
 		return size.height + 2. * kIASKVerticalPaddingFooterLabel;
 	}
 	return 0;
