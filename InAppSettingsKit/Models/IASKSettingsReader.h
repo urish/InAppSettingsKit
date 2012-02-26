@@ -121,6 +121,7 @@ __VA_ARGS__ \
     NSDictionary    *_settingsBundle;
     NSArray         *_dataSource;
     NSBundle        *_bundle;
+    NSArray         *_filters;
 }
 
 - (id)initWithFile:(NSString*)file;
@@ -134,10 +135,21 @@ __VA_ARGS__ \
 - (NSString*)titleForStringId:(NSString*)stringId;
 - (NSString*)pathForImageNamed:(NSString*)image;
 
+/**
+ * Call refresh to re-run the filters on the settings data and update dataSource accordingly.
+ */
+- (void)refresh;
+
 @property (nonatomic, retain) NSString      *path;
 @property (nonatomic, retain) NSString      *localizationTable;
 @property (nonatomic, retain) NSString      *bundlePath;
 @property (nonatomic, retain) NSDictionary  *settingsBundle;
 @property (nonatomic, retain) NSArray       *dataSource;
+
+/**
+ * Filters is an array of 0 or more id<IASKSettingFilter> objects that
+ * are used to filter the dataSource.
+ */
+@property (nonatomic, retain) NSArray       *filters;
 
 @end

@@ -16,6 +16,7 @@
 
 #import "IASKSettingsReader.h"
 #import "IASKSpecifier.h"
+#import "IASKSettingsFilter.h"
 
 @interface IASKSettingsReader (private)
 - (void)_reinterpretBundle:(NSDictionary*)settingsBundle;
@@ -31,7 +32,8 @@
 localizationTable=_localizationTable,
 bundlePath=_bundlePath,
 settingsBundle=_settingsBundle, 
-dataSource=_dataSource;
+dataSource=_dataSource,
+filters=_filters;
 
 - (id)init {
 	return [self initWithFile:@"Root"];
@@ -75,6 +77,7 @@ dataSource=_dataSource;
 	[_settingsBundle release], _settingsBundle = nil;
 	[_dataSource release], _dataSource = nil;
 	[_bundle release], _bundle = nil;
+    [_filters release], _filters = nil;
 
 	[super dealloc];
 }
@@ -84,6 +87,12 @@ dataSource=_dataSource;
 	NSInteger sectionCount			= -1;
 	NSMutableArray *dataSource		= [[[NSMutableArray alloc] init] autorelease];
 	
+    if (self.filters != nil) {
+        for (id<IASKSettingsFilter> filter in self.filters) {
+            preferenceSpecifiers = [filter filterSettings:preferenceSpecifiers];
+        }
+    }
+    
 	for (NSDictionary *specifier in preferenceSpecifiers) {
 		if ([(NSString*)[specifier objectForKey:kIASKType] isEqualToString:kIASKPSGroupSpecifier]) {
 			NSMutableArray *newArray = [[NSMutableArray alloc] init];
@@ -172,6 +181,20 @@ dataSource=_dataSource;
 
 - (NSString*)pathForImageNamed:(NSString*)image {
 	return [[self bundlePath] stringByAppendingPathComponent:image];
+}
+
+- (void)refresh {
+    if (self.settingsBundle) {
+        [self _reinterpretBundle:self.settingsBundle];
+    }
+}
+
+- (void)setFilters:(NSArray *)filters {
+    if (filters != _filters) {
+        [_filters release];
+        _filters = [filters retain];
+        [self refresh];
+    }
 }
 
 - (NSString *)platformSuffix {

@@ -16,6 +16,7 @@
 		575C01E8127CE845009FBEA2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 575C01E7127CE845009FBEA2 /* MessageUI.framework */; };
 		6A1F35EE11490727003E6295 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A1F35ED11490727003E6295 /* Icon.png */; };
 		6A9BBF591148F1DA003D97FA /* 20-gear2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6A9BBF581148F1DA003D97FA /* 20-gear2.png */; };
+		6FCA9D6714FAF31600C63766 /* IASKSettingsOSFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FCA9D6614FAF31500C63766 /* IASKSettingsOSFilter.m */; };
 		AA0717B4134C708F0043D610 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA0717B0134C708F0043D610 /* MainWindow-iPad.xib */; };
 		AA40952A1149663600C3BBFF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA4095291149663600C3BBFF /* Localizable.strings */; };
 		AA8746D0128B02B600CACD4C /* IASKSettingsStoreUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = AA8746C5128B02B600CACD4C /* IASKSettingsStoreUserDefaults.m */; };
@@ -63,6 +64,9 @@
 		6A1F35ED11490727003E6295 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6A9BBEE11148EE4B003D97FA /* French */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = French; path = French.lproj/MainWindow.xib; sourceTree = "<group>"; };
 		6A9BBF581148F1DA003D97FA /* 20-gear2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "20-gear2.png"; sourceTree = "<group>"; };
+		6FCA9D6414FAF31500C63766 /* IASKSettingsFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSettingsFilter.h; sourceTree = "<group>"; };
+		6FCA9D6514FAF31500C63766 /* IASKSettingsOSFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKSettingsOSFilter.h; sourceTree = "<group>"; };
+		6FCA9D6614FAF31500C63766 /* IASKSettingsOSFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKSettingsOSFilter.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* InAppSettingsKitSampleApp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "InAppSettingsKitSampleApp-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		AA0717B1134C708F0043D610 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "iPad/English.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		AA0717B2134C708F0043D610 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = "iPad/German.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
@@ -248,6 +252,9 @@
 		DA33F57D10BC2222004736E8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6FCA9D6414FAF31500C63766 /* IASKSettingsFilter.h */,
+				6FCA9D6514FAF31500C63766 /* IASKSettingsOSFilter.h */,
+				6FCA9D6614FAF31500C63766 /* IASKSettingsOSFilter.m */,
 				DA33F57E10BC2222004736E8 /* IASKSettingsReader.h */,
 				DA33F57F10BC2222004736E8 /* IASKSettingsReader.m */,
 				DA33F58010BC2222004736E8 /* IASKSpecifier.h */,
@@ -412,6 +419,7 @@
 				AA8746D0128B02B600CACD4C /* IASKSettingsStoreUserDefaults.m in Sources */,
 				AA8746D1128B02B600CACD4C /* IASKSettingsStoreFile.m in Sources */,
 				AA8746D2128B02B600CACD4C /* IASKSettingsStore.m in Sources */,
+				6FCA9D6714FAF31600C63766 /* IASKSettingsOSFilter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
